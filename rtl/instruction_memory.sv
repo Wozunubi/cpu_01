@@ -10,11 +10,11 @@ module instruction_memory #(
 
   localparam NUM_WORDS = 1 << ADDR_WIDTH;
 
-  (* ramstyle = "M9K", ram_init_file = "program.hex" *)
+  (* ramstyle = "M9K", ram_init_file = "../mem/program.hex" *)
   logic [DATA_WIDTH-1:0] rom [NUM_WORDS-1:0];
 
   `ifndef SYNTHESIS
-    initial $readmemh("program.hex", rom);
+    initial $readmemh("../mem/program.hex", rom);
   `endif
 
   always_ff @(posedge clk) begin
