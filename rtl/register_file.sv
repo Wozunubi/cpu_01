@@ -14,6 +14,7 @@ module register_file #(
 
   localparam NUM_REGS = 1 << REG_ADDR_WIDTH;
 
+  (* ramstyle = "logic" *)
   logic [DATA_WIDTH-1:0] reg_data [NUM_REGS-1:0];
 
   genvar i;
