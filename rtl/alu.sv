@@ -1,8 +1,7 @@
 module alu #(
   parameter WIDTH = 8
 ) (
-  input logic [WIDTH-1:0] in1,
-  input logic [WIDTH-1:0] in2,
+  input logic [WIDTH-1:0] in1, in2,
   input alu_opcode_t alu_op,
   output logic [WIDTH-1:0] out,
   output alu_flags_t flags
