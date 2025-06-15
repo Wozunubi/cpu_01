@@ -13,7 +13,7 @@ module instruction_memory #(
   (* ramstyle = "M9K", ram_init_file = "mem/program.hex" *)
   logic [DATA_WIDTH-1:0] rom [NUM_WORDS-1:0];
 
-  `ifndef SYNTHESIS
+  `ifdef SIMULATION
     initial $readmemh("mem/program.hex", rom);
   `endif
 
