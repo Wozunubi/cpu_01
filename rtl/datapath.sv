@@ -99,4 +99,34 @@ module datapath #(
   ) se_3_inst (
 
   );
+
+  mux #(
+
+  ) mux_1_inst (
+
+  );
+
+  mux #(
+
+  ) mux_2_inst (
+
+  );
+
+  mux #(
+
+  ) mux_3_inst (
+
+  );
+
+  mux #(
+
+  ) mux_4_inst (
+
+  );
+
+  mux #(
+
+  ) mux_5_inst (
+
+  );
 endmodule
