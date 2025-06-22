@@ -16,4 +16,8 @@ package defs_pkg;
     logic carry;
     logic overflow;
   } alu_flags_t;
+
+  typedef struct packed {
+    logic 
+  } ctrl_sig_t;
 endpackage

@@ -84,49 +84,49 @@ module datapath #(
 
   sign_extend #(
 
-  ) se_1_inst (
+  ) se_4t16_inst (
 
   );
 
   sign_extend #(
 
-  ) se_2_inst (
+  ) se_8t16_inst (
 
   );
 
   sign_extend #(
 
-  ) se_3_inst (
+  ) se_12t16_inst (
 
   );
 
   mux #(
 
-  ) mux_1_inst (
+  ) mux_pc_inst (
 
   );
 
   mux #(
 
-  ) mux_2_inst (
+  ) mux_adder_inst (
 
   );
 
   mux #(
 
-  ) mux_3_inst (
+  ) mux_reg2_inst (
 
   );
 
   mux #(
 
-  ) mux_4_inst (
+  ) mux_dataw_inst (
 
   );
 
   mux #(
 
-  ) mux_5_inst (
+  ) mux_alu_inst (
 
   );
 endmodule
