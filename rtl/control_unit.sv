@@ -21,14 +21,16 @@ module control_unit #(
 
   always_comb begin
     case (y)
-      // Common cycles
+      // Common states
       STATE_FETCH: begin
+        sigs.ROM_read = 1;
+        sigs.IR_load = 1;
+        
         Y = STATE_DECODE;
-        // set control sigs
       end
       STATE_DECODE: begin
-        Y = STATE_FETCH;
         // set control sigs
+        Y = STATE_FETCH;
       end
 
       // LI

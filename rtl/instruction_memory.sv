@@ -3,7 +3,6 @@ module instruction_memory #(
   parameter DATA_WIDTH = 16
 ) (
   input logic clk,
-  input logic read_en,
   input logic [ADDR_WIDTH-1:0] addr,
   output logic [DATA_WIDTH-1:0] instruct
 );
@@ -18,8 +17,6 @@ module instruction_memory #(
   `endif
 
   always_ff @(posedge clk) begin
-    if (read_en) begin
-      instruct <= rom[addr];
-    end
+    instruct <= rom[addr];
   end
 endmodule

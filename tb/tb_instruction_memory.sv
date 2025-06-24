@@ -7,7 +7,6 @@ module tb_instruction_memory;
   localparam DATA_WIDTH = 16;
 
   logic clk;
-  logic read_en;
   logic [ADDR_WIDTH-1:0] addr;
   logic [DATA_WIDTH-1:0] instruct;
 
@@ -16,7 +15,6 @@ module tb_instruction_memory;
     .DATA_WIDTH(DATA_WIDTH)
   ) dut (
     .clk(clk),
-    .read_en(read_en),
     .addr(addr),
     .instruct(instruct)
   );
@@ -25,24 +23,14 @@ module tb_instruction_memory;
   always #(CLOCK_PERIOD/2) clk = ~clk;
 
   initial begin
-    read_en = 0;
-    addr = 0;s
+    addr = 0;
     #CLOCK_PERIOD
-
-    @(posedge clk);
-    read_en = 1;
 
     @(posedge clk);
     addr = 16'h0000;
 
     @(posedge clk);
     addr = 16'h0001;
-
-    @(posedge clk);
-    read_en = 0;
-
-    @(posedge clk);
-    addr = 16'h0000;
 
     @(posedge clk);
     addr = 16'h0002;

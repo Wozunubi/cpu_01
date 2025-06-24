@@ -38,7 +38,6 @@ package defs_pkg;
 
   typedef struct packed {
     logic PC_write;
-    logic ROM_read;
     logic MEM_read;
     logic MEM_write;
     logic RF_write;
