@@ -42,12 +42,36 @@ package defs_pkg;
     logic MEM_read;
     logic MEM_write;
     logic RF_write;
-    logic ALU_op;
+    logic [3:0] ALU_op;
     logic FLAG_load;
     logic MDR_load;
     logic MAR_load;
     logic IR_load;
     logic AB_load;
     logic ACC_load;
+    logic PC_sel;
+    logic [1:0] ADDER_sel;
+    logic REG2_sel;
+    logic [2:0] REGW_sel;
+    logic ALU_sel;
   } ctrl_sig_t;
+
+  typedef enum logic [3:0] {
+    OPCODE_LI = 4'b0000,
+    OPCODE_ADDI = 4'b0001,
+    OPCODE_LW = 4'b0010,
+    OPCODE_SW = 4'b0011,
+    OPCODE_ADD = 4'b0100,
+    OPCODE_SUB = 4'b0101,
+    OPCODE_AND = 4'b0110,
+    OPCODE_OR = 4'b0111,
+    OPCODE_XOR = 4'b1000,
+    OPCODE_SLL = 4'b1001,
+    OPCODE_SRL = 4'b1010,
+    OPCODE_SRA = 4'b1011,
+    OPCODE_LINK = 4'b1100,
+    OPCODE_JMP = 4'b1101,
+    OPCODE_JPR = 4'b1110,
+    OPCODE_BRH = 4'b1111
+  } opcode_t;
 endpackage
