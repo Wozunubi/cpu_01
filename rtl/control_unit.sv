@@ -6,21 +6,23 @@ module control_unit #(
   input alu_flags_t flags,
   input logic clk,
   input logic resetn,
-  input state_t [STATE_WIDTH-1:0] y,
-  output state_t [STATE_WIDTH-1:0] Y,
   output ctrl_sig_t sigs
 );
 
   import defs_pkg::*;
 
-  always_ff @(posedge clk) begin
-    if (resetn) begin
-      y <= '0;
-      // set default sigs
-    end
+  state_t [STATE_WIDTH-1:0] y, Y;
 
+  always_ff @(posedge clk) begin
+    if (!resetn) y = STATE_FETCH;
+    else y = Y;
+  end
+
+  always_comb begin
     case (y)
       STATE_FETCH: begin
+        Y = STATE_DECODE;
+        // set default sigs
       end
       STATE_DECODE: begin
       end
@@ -54,5 +56,4 @@ module control_unit #(
       end
     endcase
   end
-
 endmodule
