@@ -1,3 +1,5 @@
+import defs_pkg::*;
+
 module alu #(
   parameter WIDTH = 8
 ) (
@@ -6,8 +8,6 @@ module alu #(
   output logic [WIDTH-1:0] out,
   output alu_flags_t flags
 );
-
-  import defs_pkg::*;
 
   always_comb begin
     flags = '0;

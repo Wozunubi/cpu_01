@@ -1,3 +1,5 @@
+import defs_pkg::*;
+
 module control_unit #(
   parameter INSTRUCTION_WIDTH = 16,
   parameter STATE_WIDTH = 4
@@ -8,8 +10,6 @@ module control_unit #(
   input logic resetn,
   output ctrl_sig_t sigs
 );
-
-  import defs_pkg::*;
 
   state_t [STATE_WIDTH-1:0] y, Y;
   opcode_t opcode;
@@ -23,14 +23,36 @@ module control_unit #(
     case (y)
       // Common states
       STATE_FETCH: begin
-        sigs.ROM_read = 1;
         sigs.IR_load = 1;
-        
+        sigs.PC_write = 1;
+        sigs.ADDER_sel = 1;
+        sigs.PC_sel = 0;
+        // set other control signals
         Y = STATE_DECODE;
       end
       STATE_DECODE: begin
-        // set control sigs
-        Y = STATE_FETCH;
+        opcode = opcode_t'(instruct[3:0]);
+        case (opcode)
+          OPCODE_LI: Y = STATE_WB_LI;
+          OPCODE_ADDI: Y = STATE_EXEC_ADDI;
+          OPCODE_LW: Y = STATE_EXEC_LW;
+          OPCODE_SW: Y = STATE_EXEC_SW;
+          OPCODE_ADD: Y = STATE_EXEC_ALU;
+          OPCODE_SUB: Y = STATE_EXEC_ALU;
+          OPCODE_AND: Y = STATE_EXEC_ALU;
+          OPCODE_OR: Y = STATE_EXEC_ALU;
+          OPCODE_XOR: Y = STATE_EXEC_ALU;
+          OPCODE_SLL: Y = STATE_EXEC_ALU;
+          OPCODE_SRL: Y = STATE_EXEC_ALU;
+          OPCODE_SRA: Y = STATE_EXEC_ALU;
+          OPCODE_LINK: Y = STATE_EXEC_LINK;
+          OPCODE_JMP: Y = STATE_EXEC_JMP;
+          OPCODE_JPR: Y = STATE_EXEC_JPR;
+          OPCODE_BRH: Y = STATE_EXEC_BRH;
+          default: Y = STATE_FETCH;
+        endcase
+        // set control signals
+        // get register 1 and 2 values
       end
 
       // LI
@@ -77,6 +99,11 @@ module control_unit #(
 
       // BRH
       STATE_EXEC_BRH: begin
+      end
+
+      default: begin
+        sigs = '0;
+        Y = STATE_FETCH;
       end
     endcase
   end
