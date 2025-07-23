@@ -47,10 +47,10 @@ module tb_alu;
 
     in1 = 8'hAA; in2 = 8'h55; alu_op = ALU_XOR; #1;
 
-    in1 = 8'h01; in2 = '0; alu_op = ALU_SLL; #1;
+    in1 = 8'h01; in2 = 8'h01; alu_op = ALU_SLL; #1;
 
-    in1 = 8'h02; in2 = '0; alu_op = ALU_SRL; #1;
+    in1 = 8'h02; in2 = 8'h01; alu_op = ALU_SRL; #1;
 
-    in1 = 8'h80; in2 = '0; alu_op = ALU_SRA; #1;
+    in1 = 8'h80; in2 = 8'h01; alu_op = ALU_SRA; #1;
   end
 endmodule

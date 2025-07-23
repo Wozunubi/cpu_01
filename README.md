@@ -1,2 +1,2 @@
 # cpu_01
-do testbench.tcl
+do sc/run_tb.tcl
