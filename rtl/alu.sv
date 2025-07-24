@@ -9,7 +9,7 @@ module alu #(
   output alu_flags_t flags
 );
 
-  logic signed [WIDTH-1:0] temp;
+  logic signed [WIDTH-1:0] s_out;
 
   always_comb begin
     flags = '0;
@@ -31,8 +31,8 @@ module alu #(
       ALU_SLL: out = in1 << in2;
       ALU_SRL: out = in1 >> in2;
       ALU_SRA: begin
-        temp = $signed(in1) >>> in2;
-        out = temp;
+        s_out = $signed(in1) >>> in2;
+        out = s_out;
       end
     endcase
 
