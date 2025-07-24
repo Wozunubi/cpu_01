@@ -17,12 +17,12 @@ module register_file #(
 
   genvar i;
   generate
-    for (i = 0; i < NUM_REGS; i++) begin : init_regs
+    for (i = 1; i < NUM_REGS; i++) begin : init_regs
       register #(
         .WIDTH(DATA_WIDTH)
       ) reg_inst (
         .clk(clk),
-        .en(write_en && (regw == i) && (i != 0)),
+        .en(write_en && (regw == i)),
         .d(dataw),
         .q(reg_data[i])
       );

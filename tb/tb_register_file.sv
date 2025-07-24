@@ -42,23 +42,18 @@ module tb_register_file;
     write_en = 1;
     regw = 1;
     dataw = 8'hFF;
+    reg1 = 0;
+    reg2 = 1;
     
     @(posedge clk);
     write_en = 0;
-    reg1 = 0;
-
-    @(posedge clk);
-    reg2 = 1;
-
-    @(posedge clk);
     regw = 2;
     dataw = 8'hAB;
 
     @(posedge clk);
     write_en = 1;
-    
-    @(posedge clk);
     regw = 2;
     dataw = 8'hAB;
+    reg1 = 2; 
   end
 endmodule
