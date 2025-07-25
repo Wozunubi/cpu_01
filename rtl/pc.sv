@@ -1,5 +1,5 @@
 module pc #(
-  parameter WIDTH = 8,
+  parameter WIDTH = 16,
   parameter [WIDTH-1:0] INIT = '0
 ) (
   input logic clk,
