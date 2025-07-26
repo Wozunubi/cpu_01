@@ -14,17 +14,22 @@ module datapath #(
   output alu_flags_t flags
 );
 
+  alu_flags_t flags_x;
   logic [ADDR_WIDTH-1:0] pc_in, pc_out;
   logic [ADDR_WIDTH-1:0] adder_in, adder_out;
   logic [ADDR_WIDTH-1:0] ir_8t16, ir_12t16;
+  logic [ADDR_WIDTH-1:0] mar_out;
   logic [INSTR_WIDTH-1:0] ir_in, ir_out;
   logic [REG_ADDR_WIDTH-1:0] reg2_in;
   logic [DATA_WIDTH-1:0] dataw_in;
   logic [DATA_WIDTH-1:0] reg_a_in, reg_b_in, reg_a_out, reg_b_out;
   logic [DATA_WIDTH-1:0] ir_4t8;
+  logic [DATA_WIDTH-1:0] alu_in, alu_out;
+  logic [DATA_WIDTH-1:0] acc_out;
+  logic [DATA_WIDTH-1:0] mdr_in, mdr_out;
   
 
-  
+
   // --- Program counter ---
   pc #(
     .WIDTH(ADDR_WIDTH),
@@ -61,9 +66,15 @@ module datapath #(
 
   // --- Data memory ---
   data_memory #(
-
+    .ADDR_WIDTH(ADDR_WIDTH),
+    .DATA_WIDTH(DATA_WIDTH)
   ) ram_inst (
-
+    .clk(clk),
+    .write_en(sigs.MEM_write),
+    .read_en(sigs.MEM_read),
+    .addr(mar_out),
+    .data_in(reg_b_out),
+    .data_out(mdr_in)
   );
 
 
@@ -87,9 +98,13 @@ module datapath #(
 
   // --- Arithmetic logic unit ---
   alu #(
-
+    .WIDTH(DATA_WIDTH)
   ) alu_inst (
-
+    .in1(alu_in),
+    .in2(reg_b_out),
+    .alu_op(sigs.ALU_op),
+    .out(alu_out),
+    .flags(flags_x)
   );
 
 
@@ -105,21 +120,30 @@ module datapath #(
   );
 
   register #(
-
+    .WIDTH(DATA_WIDTH)
   ) mdr_inst (
-
+    .clk(clk),
+    .en(sigs.MDR_load),
+    .d(mdr_in),
+    .q(mdr_out)
   );
 
   register #(
-
+    .WIDTH(ADDR_WIDTH)
   ) mar_inst (
-
+    .clk(clk),
+    .en(sigs.MAR_load),
+    .d({reg_a_out, reg_b_out}),
+    .q(mar_out)
   );
 
   register #(
-
+    .WIDTH(DATA_WIDTH)
   ) acc_inst (
-
+    .clk(clk),
+    .en(sigs.ACC_load),
+    .d(alu_out),
+    .q(acc_out)
   );
 
   register #(
@@ -141,9 +165,12 @@ module datapath #(
   );
 
   register #(
-
+    .WIDTH(4)
   ) flags_inst (
-
+    .clk(clk),
+    .en(sigs.FLAG_load),
+    .d(flags_x),
+    .q(flags)
   );
 
 
@@ -205,16 +232,19 @@ module datapath #(
 
   mux #(
     .DATA_WIDTH(DATA_WIDTH),
-    .NUM_INPUTS(2)
+    .NUM_INPUTS(5)
   ) mux_dataw_inst (
-    .in(), // TODO
+    .in({pc_out[15:8], pc_out[7:1], ir_out[15:8], mdr_out, acc_out}),
     .sel(sigs.REGW_sel),
     .out(dataw_in)
   );
 
   mux #(
-
+    .DATA_WIDTH(DATA_WIDTH),
+    .NUM_INPUTS(2)
   ) mux_alu_inst (
-
+    .in({reg_a_out, ir_4t8}),
+    .sel(sigs.ALU_sel),
+    .out(alu_in)
   );
 endmodule

@@ -41,7 +41,7 @@ package defs_pkg;
     logic MEM_read;
     logic MEM_write;
     logic RF_write;
-    logic [3:0] ALU_op;
+    alu_opcode_t ALU_op;
     logic FLAG_load;
     logic MDR_load;
     logic MAR_load;
